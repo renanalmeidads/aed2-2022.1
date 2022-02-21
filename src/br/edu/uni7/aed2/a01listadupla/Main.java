@@ -1,6 +1,4 @@
-package br.edu.uni7.aed2;
-
-import br.edu.uni7.aed2.listadupla.ListaDupla;
+package br.edu.uni7.aed2.a01listadupla;
 
 import java.util.ArrayList;
 
@@ -8,8 +6,6 @@ public class Main {
 
     public static void main(String[] args) {
         ArrayList<Integer> list = new ArrayList<Integer>();
-        list.
-
 
         ListaDupla listaDupla = new ListaDupla();
 

@@ -1,4 +1,4 @@
-package br.edu.uni7.aed2.listadupla;
+package br.edu.uni7.aed2.a01listadupla;
 
 public class No {
 
