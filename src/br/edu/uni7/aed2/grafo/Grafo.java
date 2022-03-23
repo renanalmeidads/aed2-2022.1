@@ -1,9 +1,6 @@
 package br.edu.uni7.aed2.grafo;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class Grafo {
 
@@ -45,6 +42,33 @@ public class Grafo {
                 if (!visitados[indiceVizinho]) {
                     fila.add(vizinho);
                     visitados[indiceVizinho] = true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    public boolean dfs(Vertice inicio, int valor) {
+        Stack<Vertice> pilha = new Stack<>();
+        boolean[] visitados = new boolean[vertices.size()];
+
+        pilha.push(inicio);
+
+        while (!pilha.isEmpty()) {
+            Vertice topoPilha = pilha.pop();
+            int indiceDoTopoNaListaDeVizinhos = vertices.indexOf(topoPilha);
+            if (!visitados[indiceDoTopoNaListaDeVizinhos]) {
+
+                System.out.print(topoPilha.getValor() + " ");
+                if (valor == topoPilha.getValor()) {
+                    return true;
+                }
+
+                visitados[indiceDoTopoNaListaDeVizinhos] = true;
+
+                for (Vertice vertice : topoPilha.getVizinhos()) {
+                    pilha.push(vertice);
                 }
             }
         }

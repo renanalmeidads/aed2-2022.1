@@ -5,12 +5,17 @@ import br.edu.uni7.aed2.grafo.Vertice;
 
 public class Main {
     public static void main(String[] args) {
-        Grafo grafo = new Grafo();
+        boolean[][] matrizAdjacencia = new boolean[][]{
+                {false, true, true, false, false},
+                {true, false, false, true, false},
+                {true, false, false, false, true},
+                {false, true, false, false, false},
+                {false, false, true, false, false},
+        };
 
-        Vertice vertice = new Vertice(9);
-        grafo.adicionarVertice(vertice);
+        Grafo grafo = Grafo.lerMatrizDeAdjacencia(matrizAdjacencia);
 
-        boolean resultado = grafo.bfs(vertice, 9);
+        boolean resultado = grafo.dfs(grafo.getVerticeNoIndice(0), 100);
         System.out.println(resultado);
     }
 }
