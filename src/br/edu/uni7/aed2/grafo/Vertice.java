@@ -1,4 +1,4 @@
-package br.edu.uni7.aed2.a04bfs;
+package br.edu.uni7.aed2.grafo;
 
 import java.util.LinkedList;
 import java.util.List;
