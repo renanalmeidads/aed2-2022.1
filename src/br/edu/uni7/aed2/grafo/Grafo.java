@@ -22,7 +22,7 @@ public class Grafo {
         return vertices.get(indice);
     }
 
-    public boolean bfs(Vertice inicio, int valor) {
+    public void bfs(Vertice inicio, Visitante visitante) {
         Queue<Vertice> fila = new LinkedList<>();
         boolean[] visitados = new boolean[vertices.size()];
 
@@ -32,8 +32,8 @@ public class Grafo {
         while (!fila.isEmpty()) {
             Vertice vertice = fila.poll();
 
-            if (vertice.getValor() == valor) {
-                return true;
+            if (visitante.visitar(vertice)) {
+                return;
             }
 
             for (Vertice vizinho : vertice.getVizinhos()) {
@@ -45,11 +45,9 @@ public class Grafo {
                 }
             }
         }
-
-        return false;
     }
 
-    public boolean dfs(Vertice inicio, int valor) {
+    public void dfs(Vertice inicio, Visitante visitante) {
         Stack<Vertice> pilha = new Stack<>();
         boolean[] visitados = new boolean[vertices.size()];
 
@@ -60,9 +58,8 @@ public class Grafo {
             int indiceDoTopoNaListaDeVizinhos = vertices.indexOf(topoPilha);
             if (!visitados[indiceDoTopoNaListaDeVizinhos]) {
 
-                System.out.print(topoPilha.getValor() + " ");
-                if (valor == topoPilha.getValor()) {
-                    return true;
+                if (visitante.visitar(topoPilha)) {
+                    return;
                 }
 
                 visitados[indiceDoTopoNaListaDeVizinhos] = true;
@@ -72,8 +69,6 @@ public class Grafo {
                 }
             }
         }
-
-        return false;
     }
 
     public static Grafo lerMatrizDeAdjacencia(boolean[][] matriz) {

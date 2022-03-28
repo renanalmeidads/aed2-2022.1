@@ -2,6 +2,7 @@ package br.edu.uni7.aed2;
 
 import br.edu.uni7.aed2.grafo.Grafo;
 import br.edu.uni7.aed2.grafo.Vertice;
+import br.edu.uni7.aed2.grafo.Visitante;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +16,9 @@ public class Main {
 
         Grafo grafo = Grafo.lerMatrizDeAdjacencia(matrizAdjacencia);
 
-        boolean resultado = grafo.dfs(grafo.getVerticeNoIndice(0), 100);
-        System.out.println(resultado);
+        grafo.bfs(grafo.getVerticeNoIndice(0), vertice -> {
+            System.out.print(vertice.getValor() + " ");
+            return false;
+        });
     }
 }
