@@ -1,28 +1,28 @@
 package br.edu.uni7.aed2.grafo;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Vertice {
 
     private final Integer valor;
-    private final List<Vertice> vizinhos;
+    private final Set<Aresta> arestas;
 
     public Vertice(Integer valor) {
         this.valor = valor;
-        vizinhos = new LinkedList<>();
+        this.arestas = new HashSet<>();
     }
 
     public Integer getValor() {
         return valor;
     }
 
-    public List<Vertice> getVizinhos() {
-        return vizinhos;
+    public Set<Aresta> getArestas() {
+        return arestas;
     }
 
-    public void adicionar(Vertice vizinho) {
-        vizinhos.add(vizinho);
+    public void adicionar(Aresta aresta) {
+        arestas.add(aresta);
     }
 
 }

@@ -15,8 +15,9 @@ public class Main {
         };
 
         Grafo grafo = Grafo.lerMatrizDeAdjacencia(matrizAdjacencia);
+        Vertice inicio = grafo.getVertices().iterator().next();
 
-        grafo.bfs(grafo.getVerticeNoIndice(0), vertice -> {
+        grafo.bfs(inicio, vertice -> {
             System.out.print(vertice.getValor() + " ");
             return false;
         });

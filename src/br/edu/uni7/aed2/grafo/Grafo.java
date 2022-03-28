@@ -4,30 +4,45 @@ import java.util.*;
 
 public class Grafo {
 
-    private final List<Vertice> vertices;
+    private final Set<Vertice> vertices;
+    private final Set<Aresta> arestas;
 
     public Grafo() {
-        this.vertices = new ArrayList<>();
+        this.vertices = new HashSet<>();
+        this.arestas = new HashSet<>();
     }
 
-    public Grafo(List<Vertice> vertices) {
+    public Grafo(Set<Vertice> vertices) {
         this.vertices = vertices;
+        this.arestas = new HashSet<>();
+
+        for (Vertice vertice : vertices) {
+            arestas.addAll(vertice.getArestas());
+        }
+    }
+
+    public Set<Vertice> getVertices() {
+        return vertices;
+    }
+
+    public Set<Aresta> getArestas() {
+        return arestas;
     }
 
     public void adicionarVertice(Vertice vertice) {
         vertices.add(vertice);
     }
 
-    public Vertice getVerticeNoIndice(int indice) {
-        return vertices.get(indice);
+    public void adicionarAresta(Aresta aresta) {
+        arestas.add(aresta);
     }
 
     public void bfs(Vertice inicio, Visitante visitante) {
         Queue<Vertice> fila = new LinkedList<>();
-        boolean[] visitados = new boolean[vertices.size()];
+        Set<Vertice> visitados = new HashSet<>();
 
         fila.add(inicio);
-        visitados[vertices.indexOf(inicio)] = true;
+        visitados.add(inicio);
 
         while (!fila.isEmpty()) {
             Vertice vertice = fila.poll();
@@ -36,12 +51,12 @@ public class Grafo {
                 return;
             }
 
-            for (Vertice vizinho : vertice.getVizinhos()) {
-                int indiceVizinho = vertices.indexOf(vizinho);
+            for (Aresta aresta : vertice.getArestas()) {
+                Vertice vizinho = aresta.getVizinho(vertice);
 
-                if (!visitados[indiceVizinho]) {
+                if (!visitados.contains(vizinho)) {
                     fila.add(vizinho);
-                    visitados[indiceVizinho] = true;
+                    visitados.add(vizinho);
                 }
             }
         }
@@ -49,23 +64,21 @@ public class Grafo {
 
     public void dfs(Vertice inicio, Visitante visitante) {
         Stack<Vertice> pilha = new Stack<>();
-        boolean[] visitados = new boolean[vertices.size()];
+        Set<Vertice> visitados = new HashSet<>();
 
         pilha.push(inicio);
 
         while (!pilha.isEmpty()) {
-            Vertice topoPilha = pilha.pop();
-            int indiceDoTopoNaListaDeVizinhos = vertices.indexOf(topoPilha);
-            if (!visitados[indiceDoTopoNaListaDeVizinhos]) {
-
-                if (visitante.visitar(topoPilha)) {
+            Vertice vertice = pilha.pop();
+            if (!visitados.contains(vertice)) {
+                if (visitante.visitar(vertice)) {
                     return;
                 }
 
-                visitados[indiceDoTopoNaListaDeVizinhos] = true;
+                visitados.add(vertice);
 
-                for (Vertice vertice : topoPilha.getVizinhos()) {
-                    pilha.push(vertice);
+                for (Aresta aresta : vertice.getArestas()) {
+                    pilha.push(aresta.getVizinho(vertice));
                 }
             }
         }
