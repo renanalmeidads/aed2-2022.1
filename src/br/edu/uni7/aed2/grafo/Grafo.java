@@ -33,12 +33,9 @@ public class Grafo {
         vertices.add(vertice);
     }
 
-    public void adicionarAresta(Aresta aresta) {
-        arestas.add(aresta);
-    }
-
     public void bfs(Vertice inicio, Visitante visitante) {
         Queue<Vertice> fila = new LinkedList<>();
+        Queue<Aresta> filaArestas = new LinkedList<>();
         Set<Vertice> visitados = new HashSet<>();
 
         fila.add(inicio);
@@ -47,7 +44,7 @@ public class Grafo {
         while (!fila.isEmpty()) {
             Vertice vertice = fila.poll();
 
-            if (visitante.visitar(vertice)) {
+            if (visitante.visitar(vertice, filaArestas.poll())) {
                 return;
             }
 
@@ -56,6 +53,7 @@ public class Grafo {
 
                 if (!visitados.contains(vizinho)) {
                     fila.add(vizinho);
+                    filaArestas.add(aresta);
                     visitados.add(vizinho);
                 }
             }
@@ -64,6 +62,7 @@ public class Grafo {
 
     public void dfs(Vertice inicio, Visitante visitante) {
         Stack<Vertice> pilha = new Stack<>();
+        Stack<Aresta> pilhaArestas = new Stack<>();
         Set<Vertice> visitados = new HashSet<>();
 
         pilha.push(inicio);
@@ -71,7 +70,8 @@ public class Grafo {
         while (!pilha.isEmpty()) {
             Vertice vertice = pilha.pop();
             if (!visitados.contains(vertice)) {
-                if (visitante.visitar(vertice)) {
+                Aresta topo = pilhaArestas.size() > 0 ? pilhaArestas.pop() : null;
+                if (visitante.visitar(vertice, topo)) {
                     return;
                 }
 
@@ -79,9 +79,15 @@ public class Grafo {
 
                 for (Aresta aresta : vertice.getArestas()) {
                     pilha.push(aresta.getVizinho(vertice));
+                    pilhaArestas.push(aresta);
                 }
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return "G(V=" + vertices + ", E=" + arestas + ")";
     }
 
     public static Grafo lerMatrizDeAdjacencia(boolean[][] matriz) {
@@ -100,12 +106,14 @@ public class Grafo {
                 Vertice verticeB = vertices.get(j);
 
                 if (matriz[i][j]) {
-                    verticeA.adicionar(verticeB);
+                    Aresta aresta = new Aresta(verticeA, verticeB);
+                    verticeA.adicionar(aresta);
+                    verticeB.adicionar(aresta);
                 }
             }
         }
 
-        return new Grafo(vertices);
+        return new Grafo(new HashSet<>(vertices));
     }
 
     public static Grafo lerListaDeAdjacencia(List<Integer>[] listaAdjacencia) {
@@ -123,11 +131,14 @@ public class Grafo {
 
             for (Integer adjacente : adjacentes) {
                 Vertice verticeAdjacente = vertices.get(adjacente);
-                verticeA.adicionar(verticeAdjacente);
+
+                Aresta aresta = new Aresta(verticeA, verticeAdjacente);
+                verticeA.adicionar(aresta);
+                verticeAdjacente.adicionar(aresta);
             }
         }
 
-        return new Grafo(vertices);
+        return new Grafo(new HashSet<>(vertices));
     }
 
 }
