@@ -28,6 +28,10 @@ public class Aresta {
         throw new IllegalArgumentException("O vértice informado não pertence a esta aresta");
     }
 
+    public boolean pertence(Vertice vertice) {
+        return vertice.equals(verticeA) || vertice.equals(verticeB);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -7,11 +7,6 @@ public class Grafo {
     private final Set<Vertice> vertices;
     private final Set<Aresta> arestas;
 
-    public Grafo() {
-        this.vertices = new HashSet<>();
-        this.arestas = new HashSet<>();
-    }
-
     public Grafo(Set<Vertice> vertices) {
         this.vertices = vertices;
         this.arestas = new HashSet<>();
@@ -29,8 +24,13 @@ public class Grafo {
         return arestas;
     }
 
-    public void adicionarVertice(Vertice vertice) {
-        vertices.add(vertice);
+    public Vertice getVertice(int valor) {
+        for (Vertice vertice : vertices) {
+            if (vertice.getValor() == valor)
+                return vertice;
+        }
+
+        throw new IllegalArgumentException("Vértice de valor inexistente no grafo");
     }
 
     public void bfs(Vertice inicio, Visitante visitante) {
@@ -69,17 +69,18 @@ public class Grafo {
 
         while (!pilha.isEmpty()) {
             Vertice vertice = pilha.pop();
+            Aresta aresta = pilhaArestas.isEmpty() ? null : pilhaArestas.pop();
+
             if (!visitados.contains(vertice)) {
-                Aresta topo = pilhaArestas.size() > 0 ? pilhaArestas.pop() : null;
-                if (visitante.visitar(vertice, topo)) {
+                if (visitante.visitar(vertice, aresta)) {
                     return;
                 }
 
                 visitados.add(vertice);
 
-                for (Aresta aresta : vertice.getArestas()) {
-                    pilha.push(aresta.getVizinho(vertice));
-                    pilhaArestas.push(aresta);
+                for (Aresta arestaVizinho : vertice.getArestas()) {
+                    pilha.push(arestaVizinho.getVizinho(vertice));
+                    pilhaArestas.push(arestaVizinho);
                 }
             }
         }
