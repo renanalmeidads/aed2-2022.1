@@ -96,9 +96,17 @@ public class Caminho {
             //remova 'v' de 'n'
         }
 
-        for(int i = 0; i < p.length; i++)
+        Stack<Aresta> pilhaArestas = new Stack<Aresta>();
+
+        while(!y.equals(p[0]))
         {
-            arestas.add(new Aresta(p[i] , new Vertice(i)));
+            pilhaArestas.add(new Aresta(p[y.getValor()], y));
+
+            y = p[y.getValor()];
+        }
+
+        while(!pilhaArestas.isEmpty()) {
+            arestas.add(pilhaArestas.pop());
         }
 
         return new Caminho(arestas);
