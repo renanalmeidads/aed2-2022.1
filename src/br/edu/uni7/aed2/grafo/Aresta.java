@@ -1,5 +1,7 @@
 package br.edu.uni7.aed2.grafo;
 
+import java.util.Random;
+
 public class Aresta {
 
     private final Vertice verticeA;
@@ -9,7 +11,7 @@ public class Aresta {
     public Aresta(Vertice verticeA, Vertice verticeB) {
         this.verticeA = verticeA;
         this.verticeB = verticeB;
-        this.peso = 0;
+        this.peso = new Random().nextInt(25);
     }
 
     public Aresta(Vertice verticeA, Vertice verticeB, Integer peso) {
