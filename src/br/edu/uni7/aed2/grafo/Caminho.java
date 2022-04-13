@@ -1,8 +1,6 @@
 package br.edu.uni7.aed2.grafo;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class Caminho {
 
@@ -39,6 +37,28 @@ public class Caminho {
         }
 
         return new Caminho(caminhoXY);
+    }
+
+    public static Caminho dijkstra(Grafo grafo, Vertice x, Vertice y) {
+        Set<Vertice> n = new HashSet<>(grafo.getVertices());
+        Integer[] d = new Integer[n.size()];
+        Vertice[] p = new Vertice[n.size()];
+
+        for (Aresta aresta : x.getArestas()) {
+            int vizinho = aresta.getVizinho(x).getValor();
+            d[vizinho] = aresta.getPeso();
+            p[vizinho] = x;
+        }
+
+        while (!n.isEmpty()) {
+            //selecionar vértice 'v' cujo valor em 'd' seja o menor
+            //para cada vizinho 'j' do vértice 'v',
+            // calcule o custo 'c' do caminho v-j se 'j' não estiver em 'n'
+            // se 'c' for menor que o valor de 'j' em 'd', atualize 'd' e 'p'
+            //remova 'v' de 'n'
+        }
+
+        return null;
     }
 
 }
