@@ -4,10 +4,26 @@ public class Aresta {
 
     private final Vertice verticeA;
     private final Vertice verticeB;
+    private Integer peso;
 
     public Aresta(Vertice verticeA, Vertice verticeB) {
         this.verticeA = verticeA;
         this.verticeB = verticeB;
+        this.peso = 0;
+    }
+
+    public Aresta(Vertice verticeA, Vertice verticeB, Integer peso) {
+        this.verticeA = verticeA;
+        this.verticeB = verticeB;
+        this.peso = peso;
+    }
+
+    public Integer getPeso() {
+        return peso;
+    }
+
+    public void setPeso(Integer peso) {
+        this.peso = peso;
     }
 
     public Vertice getVerticeA() {
