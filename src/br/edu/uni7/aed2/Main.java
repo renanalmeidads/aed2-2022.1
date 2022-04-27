@@ -21,7 +21,7 @@ public class Main {
         System.out.println(grafo);
 
         Vertice x = grafo.getVertice(0);
-        Vertice y = grafo.getVertice(3);
+        Vertice y = grafo.getVertice(4);
         Caminho caminho = Caminho.dijkstra(grafo, x, y);
         System.out.println("O caminho entre 0 e 4 é: " + caminho);
     }

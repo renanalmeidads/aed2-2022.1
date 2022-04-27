@@ -2,12 +2,12 @@ package br.edu.uni7.aed2.grafo;
 
 import java.util.*;
 
-public class Grafo {
+public class Grafo<V> {
 
-    private final Set<Vertice> vertices;
+    private final Set<Vertice<V>> vertices;
     private final Set<Aresta> arestas;
 
-    public Grafo(Set<Vertice> vertices) {
+    public Grafo(Set<Vertice<V>> vertices) {
         this.vertices = vertices;
         this.arestas = new HashSet<>();
 
@@ -16,7 +16,7 @@ public class Grafo {
         }
     }
 
-    public Set<Vertice> getVertices() {
+    public Set<Vertice<V>> getVertices() {
         return vertices;
     }
 
@@ -24,7 +24,7 @@ public class Grafo {
         return arestas;
     }
 
-    public Vertice getVertice(int valor) {
+    public Vertice getVertice(V valor) {
         for (Vertice vertice : vertices) {
             if (vertice.getValor() == valor)
                 return vertice;
@@ -33,23 +33,23 @@ public class Grafo {
         throw new IllegalArgumentException("Vértice de valor inexistente no grafo");
     }
 
-    public void bfs(Vertice inicio, Visitante visitante) {
-        Queue<Vertice> fila = new LinkedList<>();
+    public void bfs(Vertice<V> inicio, Visitante visitante) {
+        Queue<Vertice<V>> fila = new LinkedList<>();
         Queue<Aresta> filaArestas = new LinkedList<>();
-        Set<Vertice> visitados = new HashSet<>();
+        Set<Vertice<V>> visitados = new HashSet<>();
 
         fila.add(inicio);
         visitados.add(inicio);
 
         while (!fila.isEmpty()) {
-            Vertice vertice = fila.poll();
+            Vertice<V> vertice = fila.poll();
 
             if (visitante.visitar(vertice, filaArestas.poll())) {
                 return;
             }
 
             for (Aresta aresta : vertice.getArestas()) {
-                Vertice vizinho = aresta.getVizinho(vertice);
+                Vertice<V> vizinho = aresta.getVizinho(vertice);
 
                 if (!visitados.contains(vizinho)) {
                     fila.add(vizinho);
@@ -60,15 +60,15 @@ public class Grafo {
         }
     }
 
-    public void dfs(Vertice inicio, Visitante visitante) {
-        Stack<Vertice> pilha = new Stack<>();
+    public void dfs(Vertice<V> inicio, Visitante visitante) {
+        Stack<Vertice<V>> pilha = new Stack<>();
         Stack<Aresta> pilhaArestas = new Stack<>();
-        Set<Vertice> visitados = new HashSet<>();
+        Set<Vertice<V>> visitados = new HashSet<>();
 
         pilha.push(inicio);
 
         while (!pilha.isEmpty()) {
-            Vertice vertice = pilha.pop();
+            Vertice<V> vertice = pilha.pop();
             Aresta aresta = pilhaArestas.isEmpty() ? null : pilhaArestas.pop();
 
             if (!visitados.contains(vertice)) {
@@ -91,20 +91,20 @@ public class Grafo {
         return "G(V=" + vertices + ", E=" + arestas + ")";
     }
 
-    public static Grafo lerMatrizDeAdjacencia(boolean[][] matriz) {
+    public static Grafo<Integer> lerMatrizDeAdjacencia(boolean[][] matriz) {
         int n = matriz.length;
 
-        List<Vertice> vertices = new LinkedList<>();
+        List<Vertice<Integer>> vertices = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            Vertice v = new Vertice(i);
+            Vertice<Integer> v = new Vertice(i);
             vertices.add(v);
         }
 
         for (int i = 0; i < n; i++) {
-            Vertice verticeA = vertices.get(i);
+            Vertice<Integer> verticeA = vertices.get(i);
 
             for (int j = 0; j < matriz[i].length; j++) {
-                Vertice verticeB = vertices.get(j);
+                Vertice<Integer> verticeB = vertices.get(j);
 
                 if (matriz[i][j]) {
                     Aresta aresta = new Aresta(verticeA, verticeB);
@@ -117,21 +117,21 @@ public class Grafo {
         return new Grafo(new HashSet<>(vertices));
     }
 
-    public static Grafo lerListaDeAdjacencia(List<Integer>[] listaAdjacencia) {
+    public static Grafo<Integer> lerListaDeAdjacencia(List<Integer>[] listaAdjacencia) {
         int n = listaAdjacencia.length;
 
-        List<Vertice> vertices = new LinkedList<>();
+        List<Vertice<Integer>> vertices = new LinkedList<>();
         for (int i = 0; i < n; i++) {
-            Vertice vertice = new Vertice(i);
+            Vertice<Integer> vertice = new Vertice(i);
             vertices.add(vertice);
         }
 
         for (int i = 0; i < n; i++) {
-            Vertice verticeA = vertices.get(i);
+            Vertice<Integer> verticeA = vertices.get(i);
             List<Integer> adjacentes = listaAdjacencia[i];
 
             for (Integer adjacente : adjacentes) {
-                Vertice verticeAdjacente = vertices.get(adjacente);
+                Vertice<Integer> verticeAdjacente = vertices.get(adjacente);
 
                 Aresta aresta = new Aresta(verticeA, verticeAdjacente);
                 verticeA.adicionar(aresta);

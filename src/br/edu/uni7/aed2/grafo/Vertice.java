@@ -4,21 +4,21 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Vertice {
+public class Vertice<T> {
 
-    private final Integer valor;
-    private final Set<Aresta> arestas;
+    private final T valor;
+    private final Set<Aresta<T>> arestas;
 
-    public Vertice(Integer valor) {
+    public Vertice(T valor) {
         this.valor = valor;
         this.arestas = new HashSet<>();
     }
 
-    public Integer getValor() {
+    public T getValor() {
         return valor;
     }
 
-    public Set<Aresta> getArestas() {
+    public Set<Aresta<T>> getArestas() {
         return arestas;
     }
 
