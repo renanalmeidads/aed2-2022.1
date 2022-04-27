@@ -7,7 +7,7 @@ public class Aresta<V> {
     private final Vertice<V> verticeA;
     private final Vertice<V> verticeB;
     private Integer peso;
-    private String Descricao;
+    private String descricao;
 
     public Aresta(Vertice<V> verticeA, Vertice<V> verticeB) {
         this.verticeA = verticeA;
@@ -15,18 +15,19 @@ public class Aresta<V> {
         this.peso = new Random().nextInt(25);
     }
 
-    public Aresta(Vertice<V> verticeA, Vertice<V> verticeB, Integer peso) {
+    public Aresta(Vertice<V> verticeA, Vertice<V> verticeB, Integer peso, String descricao) {
         this.verticeA = verticeA;
         this.verticeB = verticeB;
         this.peso = peso;
+        this.descricao = descricao;
     }
 
     public String getDescricao() {
-        return Descricao;
+        return descricao;
     }
 
     public void setDescricao(String descricao) {
-        Descricao = descricao;
+        descricao = descricao;
     }
 
     public Integer getPeso() {
