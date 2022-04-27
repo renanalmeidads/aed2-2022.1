@@ -4,25 +4,35 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-public class Vertice<T> {
+public class Vertice<V, E> {
 
-    private final T valor;
-    private final Set<Aresta<T>> arestas;
+    private final V valor;
+    private final Set<Aresta<V, E>> arestas;
 
-    public Vertice(T valor) {
+    public Vertice(V valor) {
         this.valor = valor;
         this.arestas = new HashSet<>();
     }
 
-    public T getValor() {
+    public V getValor() {
         return valor;
     }
 
-    public Set<Aresta<T>> getArestas() {
+    public Set<Aresta<V, E>> getArestas() {
         return arestas;
     }
 
-    public void adicionar(Aresta aresta) {
+    public Aresta<V, E> getAresta(Vertice<V, E> vizinho) {
+        for (Aresta<V, E> aresta : arestas) {
+            if (aresta.getVizinho(this).equals(vizinho)) {
+                return aresta;
+            }
+        }
+
+        throw new IllegalArgumentException("O vertice recebido não é vizinho deste vértice");
+    }
+
+    public void adicionar(Aresta<V, E> aresta) {
         arestas.add(aresta);
     }
 
@@ -30,7 +40,7 @@ public class Vertice<T> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Vertice vertice = (Vertice) o;
+        Vertice<?, ?> vertice = (Vertice<?, ?>) o;
         return valor.equals(vertice.valor);
     }
 
